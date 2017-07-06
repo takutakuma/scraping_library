@@ -3,7 +3,7 @@
 const Nightmare = require('nightmare');
 const fs = require('fs');
 require('date-utils');
-const jsondiffpatch = require('jsondiffpatch');
+// const jsondiffpatch = require('jsondiffpatch');
 
 const newBookURL = 'https://www.library.pref.osaka.jp/licsxp-opac/WOpacMsgNewMenuToMsgNewListAction.do?newMenuCode=';
 const searchItems = {
@@ -83,12 +83,12 @@ series.then(data => {
     fs.writeFile(`${formatted}.json`, JSON.stringify(jsonData,null, '\t') ,'utf8');
 
     //jsonファイルの比較(前日データとの比較)
-    const a = require(`./${formatted}.json`);
-    dt.add({days : -1});    //前日に設定仕直し
-    const b = require(`./${dt.toFormat("YYYYMMDD")}.json`);
+    // const a = require(`./${formatted}.json`);
+    // dt.add({days : -1});    //前日に設定仕直し
+    // const b = require(`./${dt.toFormat("YYYYMMDD")}.json`);
 
-    const diff = jsondiffpatch.diff(a, b);
+    // const diff = jsondiffpatch.diff(a, b);
 
-    console.log(diff);
+    // console.log(diff);
 })
 .catch(e => console.error(e));
