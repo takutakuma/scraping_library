@@ -1,6 +1,7 @@
 'use strict';
 
 const Nightmare = require('nightmare');
+const fs = require('fs');
 
 const newBookURL = 'https://www.library.pref.osaka.jp/licsxp-opac/WOpacMsgNewMenuToMsgNewListAction.do?newMenuCode=';
 const searchItems = {
@@ -68,7 +69,8 @@ const series = searchItems['category'].reduce(async (queue,x) => {
 series.then(data => {
     data.forEach(function(value,key){
         value.forEach(function(value2,key2){
-            console.log(value2);
+            // console.log(JSON.stringify(value2));
+            fs.appendFileSync(`a.json`, JSON.stringify(value2) + '\n' ,'utf8');
         });
     });
 })
