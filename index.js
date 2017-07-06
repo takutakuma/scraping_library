@@ -66,6 +66,10 @@ const series = searchItems['category'].reduce(async (queue,x) => {
 }, Promise.resolve([]));
 
 series.then(data => {
-    console.log(data);
+    data.forEach(function(value,key){
+        value.forEach(function(value2,key2){
+            console.log(value2);
+        });
+    });
 })
 .catch(e => console.error(e));
