@@ -3,6 +3,7 @@
 const Nightmare = require('nightmare');
 const fs = require('fs');
 require('date-utils');
+const jsondiffpatch = require('jsondiffpatch');
 
 const newBookURL = 'https://www.library.pref.osaka.jp/licsxp-opac/WOpacMsgNewMenuToMsgNewListAction.do?newMenuCode=';
 const searchItems = {
@@ -68,14 +69,26 @@ const series = searchItems['category'].reduce(async (queue,x) => {
 }, Promise.resolve([]));
 
 series.then(data => {
-    let dt = new Date();
-    let formatted = dt.toFormat("YYYYMMDD");
 
+    //取得データの整形
+    let jsonData =[];
     data.forEach(function(value,key){
         value.forEach(function(value2,key2){
-            // console.log(JSON.stringify(value2));
-            fs.appendFileSync(`${formatted}.json`, JSON.stringify(value2) + '\n' ,'utf8');
+            jsonData.push(value2);
         });
     });
+
+    let dt = new Date();
+    let formatted = dt.toFormat("YYYYMMDD");
+    fs.writeFile(`${formatted}.json`, JSON.stringify(jsonData,null, '\t') ,'utf8');
+
+    //jsonファイルの比較(前日データとの比較)
+    const a = require(`./${formatted}.json`);
+    dt.add({days : -1});    //前日に設定仕直し
+    const b = require(`./${dt.toFormat("YYYYMMDD")}.json`);
+
+    const diff = jsondiffpatch.diff(a, b);
+
+    console.log(diff);
 })
 .catch(e => console.error(e));
