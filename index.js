@@ -34,7 +34,7 @@ const getBookData =  async (genre,ndc) => {
     const nightmare = new Nightmare({ show: false });
 
     try {
-        await nightmare
+        const result = await nightmare
         .goto(newBookURL + genre)
         .wait('table.list tr.ItemNo')
         .evaluate((ndc) => {
@@ -50,10 +50,8 @@ const getBookData =  async (genre,ndc) => {
                 }]);
         },ndc)
         .end()
-        .then((result) => {
-            console.log(result);
-            return result;
-        })
+
+        return result;
     } catch(e) {
         console.error('Search failed:', e);
         return undefined;
