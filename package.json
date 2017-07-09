@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "date-utils": "^1.2.21",
-    "jsondiffpatch": "^0.2.4",
     "nightmare": "^2.10.0"
   }
 }
