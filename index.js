@@ -84,9 +84,7 @@ series.then(data => {
 
     //差分チェック
     dt.add({days : -1});
-    const b = require(`./${dt.toFormat("YYYYMMDD")}.json`);
-    // let jsonData2 = JSON.parse(b);
-
+    let jsonData2 =JSON.parse(fs.readFileSync(`./${dt.toFormat("YYYYMMDD")}.json`, 'utf8'));
 
 })
 .catch(e => console.error(e));
