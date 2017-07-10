@@ -73,7 +73,9 @@ series.then(data => {
     let jsonData =[];
     data.forEach(function(value,key){
         value.forEach(function(value2,key2){
-            jsonData.push(value2);
+            value2.forEach(function(value3,key3){
+                jsonData.push(value3);
+            });
         });
     });
 
@@ -86,5 +88,19 @@ series.then(data => {
     dt.add({days : -1});
     let jsonData2 =JSON.parse(fs.readFileSync(`./${dt.toFormat("YYYYMMDD")}.json`, 'utf8'));
 
+    let diffData = [];
+    for(let ele of jsonData){
+        let exist = false;
+        for(let ele2 of jsonData2){
+            if(ele.id === ele2.id){
+                exist = true;
+            };
+        }
+        if(!exist){
+            diffData.push(ele);
+        };
+    };
+
+    console.log(diffData);
 })
 .catch(e => console.error(e));
