@@ -82,11 +82,11 @@ series.then(data => {
     //ファイルへの書き込み
     let dt = new Date();
     let formatted = dt.toFormat("YYYYMMDD");
-    fs.writeFile(`${formatted}.json`, JSON.stringify(jsonData,null, '\t') ,'utf8');
+    fs.writeFile(`./json/${formatted}.json`, JSON.stringify(jsonData,null, '\t') ,'utf8');
 
     //差分チェック
     dt.add({days : -1});
-    let jsonData2 =JSON.parse(fs.readFileSync(`./${dt.toFormat("YYYYMMDD")}.json`, 'utf8'));
+    let jsonData2 =JSON.parse(fs.readFileSync(`./json/${dt.toFormat("YYYYMMDD")}.json`, 'utf8'));
 
     let diffData = [];
     for(let ele of jsonData){
